@@ -25,7 +25,7 @@ const tprc = initTRPC.create();
 
 export const trpcRouter = tprc.router({
   getStuff: tprc.procedure.query(() => {
-    return stuff;
+    return { stuff };
   }),
 });
 

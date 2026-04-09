@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "@my-own-blog-admin-pannel/backend",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@trpc/server": "^11.16.0",
+    "@types/cors": "^2.8.19",
+    "cors": "^2.8.6",
     "express": "^5.2.1"
   },
   "devDependencies": {

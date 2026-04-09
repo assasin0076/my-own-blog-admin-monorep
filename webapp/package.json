@@ -1,5 +1,5 @@
 {
-  "name": "webapp",
+  "name": "@my-own-blog-admin-pannel/webapp",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,6 +12,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@my-own-blog-admin-pannel/backend": "workspace:*",
+    "@tanstack/react-query": "^5.97.0",
+    "@trpc/client": "^11.16.0",
+    "@trpc/react-query": "^11.16.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
