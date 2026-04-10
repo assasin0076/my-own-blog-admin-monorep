@@ -6,6 +6,7 @@
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
     "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "module": "commonjs",
     "moduleResolution": "Node",
     "esModuleInterop": true,

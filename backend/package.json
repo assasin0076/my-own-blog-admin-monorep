@@ -6,6 +6,7 @@
     "dev": "ts-node-dev ./src/index.ts",
     "build": " rimraf ./dist && tsc -b ./tsconfig.json",
     "start": "node ./dist/index.js",
+    "types": "tsc --noEmit --project ./tsconfig.json",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,scss,md}\""
   },
