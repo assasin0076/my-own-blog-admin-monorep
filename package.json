@@ -1,5 +1,32 @@
 {
   "name": "my-own-blog-admin-pannel",
   "private": true,
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "b": "pnpm --filter @my-own-blog-admin-pannel/backend",
+    "f": "pnpm --filter @my-own-blog-admin-pannel/webapp",
+    "dev": "pnpm -r --parallel dev",
+    "types": "turbo run types",
+    "build": "turbo run build",
+    "format": "turbo run format",
+    "lint": "turbo run lint",
+    "lint:backend": "pnpm --filter @my-own-blog-admin-pannel/backend run lint",
+    "lint:webapp": "pnpm --filter @my-own-blog-admin-pannel/webapp run lint"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^2.0.5",
+    "@eslint/js": "^10.0.1",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-n": "^17.24.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "turbo": "^2.9.5",
+    "typescript-eslint": "^8.58.1"
+  }
 }

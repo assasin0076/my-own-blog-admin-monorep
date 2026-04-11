@@ -1,6 +1,12 @@
 import { initTRPC } from '@trpc/server';
 
-const stuff = [
+type Stuff = {
+  name: string;
+  tags: string[];
+  description: string;
+};
+
+const stuff: Stuff[] = [
   {
     name: 'Первый проект',
     tags: ['тег1', 'тег2'],
