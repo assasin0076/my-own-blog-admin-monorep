@@ -1,7 +1,7 @@
 import { trpc } from '../../lib/trpc';
 
 export const StuffListPage = () => {
-  const { data, error, isLoading, isFetching, isError } = trpc.getStuff.useQuery();
+  const { data, error, isLoading, isError } = trpc.getStuff.useQuery();
 
   if (isLoading) {
     return <span>Loading...</span>;

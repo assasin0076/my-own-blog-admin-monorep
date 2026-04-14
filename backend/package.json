@@ -9,7 +9,7 @@
     "types": "tsc --noEmit --project ./tsconfig.json",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
-    "lint": "eslint ."
+    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslintcache ."
   },
   "dependencies": {
     "@trpc/server": "^11.16.0",
