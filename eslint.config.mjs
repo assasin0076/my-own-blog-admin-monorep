@@ -1,6 +1,5 @@
 import prettierConfig from 'eslint-config-prettier';
 import { defineConfig } from 'eslint/config';
-import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import { baseESLintIgnores } from './esling.base.ignores.mjs';
 import globals from 'globals';
@@ -143,4 +142,6 @@ export default defineConfig([
       },
     },
   },
+
+  prettierConfig,
 ]);
