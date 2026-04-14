@@ -4,8 +4,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 export const trpc = createTRPCReact<TrpcRouter>() as ReturnType<typeof createTRPCReact<TrpcRouter>>;
 
-const x: string = 1;
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
