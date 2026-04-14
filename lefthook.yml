@@ -9,3 +9,7 @@ pre-commit:
 
     types:
       run: pnpm types
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm exec commitlint --edit {1}
