@@ -1,4 +1,6 @@
 import { trpc } from '@/lib/trpc';
+import { getStuffRoute } from '@/router/routes';
+import { Link } from 'react-router';
 
 export const StuffListPage = () => {
   const { data, error, isLoading, isError } = trpc.getStuff.useQuery();
@@ -14,14 +16,22 @@ export const StuffListPage = () => {
   return (
     <div>
       <div>
-        <h1>stuff page</h1>
+        <h1>stuff list page</h1>
         <p>Список проектов</p>
       </div>
       <div>
         {data?.stuff.map((stuff) => {
           return (
             <div key={stuff.name}>
-              <h2>{stuff.name}</h2>
+              <h2>
+                <Link
+                  to={{
+                    pathname: getStuffRoute({ stuffName: stuff.name }),
+                  }}
+                >
+                  {stuff.name}
+                </Link>
+              </h2>
               <p>{stuff.tags.join(' | ')}</p>
               <p>{stuff.description}</p>
             </div>

@@ -1,16 +1,20 @@
 import { MainPage } from '@/pages/MainPage';
 import { StuffListPage } from '@/pages/StuffListPage';
+import { StuffPage } from '@/pages/StuffPage';
 import { createBrowserRouter } from 'react-router';
-
-const a = 1;
+import { getMainRoute, getStuffListRoute, getStuffRoute } from './routes';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: getMainRoute(),
     Component: MainPage,
   },
   {
-    path: '/stuff',
+    path: getStuffListRoute(),
     Component: StuffListPage,
+  },
+  {
+    path: getStuffRoute({ stuffName: ':stuffName' }),
+    Component: StuffPage,
   },
 ]);
