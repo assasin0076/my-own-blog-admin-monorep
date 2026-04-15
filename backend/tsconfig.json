@@ -27,7 +27,6 @@
     "sourceRoot": "/",
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": "./",
     "resolveJsonModule": true,
     "incremental": true,
     "skipLibCheck": true,
@@ -37,5 +36,5 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src"]
+  "include": ["src/**/*"]
 }

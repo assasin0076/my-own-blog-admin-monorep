@@ -1,20 +1,11 @@
+import { RouterProvider } from 'react-router/dom';
 import { TrpcProvider } from './lib/trpc';
-import { StuffListPage } from './pages/StuffListPage';
-
-export const MainPage = () => {
-  return (
-    <div>
-      <h1>Админка</h1>
-      <p>Данное приложение позволит регулировать удаленно работу сайта</p>
-      <StuffListPage />
-    </div>
-  );
-};
+import { router } from './router';
 
 export const App = () => {
   return (
     <TrpcProvider>
-      <MainPage />
+      <RouterProvider router={router} />
     </TrpcProvider>
   );
 };

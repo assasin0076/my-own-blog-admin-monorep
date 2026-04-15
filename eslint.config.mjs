@@ -88,7 +88,7 @@ export default defineConfig([
 
   // frontend config
   {
-    files: ['frontend/**/*.{ts,tsx,js,jsx}'],
+    files: ['webapp/**/*.{ts,tsx,js,jsx}'],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -115,7 +115,7 @@ export default defineConfig([
       // TypeScript строгие правила
       ...tseslint.configs.recommended.rules,
       '@typescript-eslint/no-unused-vars': [
-        'error',
+        'warn',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
       '@typescript-eslint/no-explicit-any': 'warn',

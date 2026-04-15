@@ -1,4 +1,4 @@
-import { trpc } from '../../lib/trpc';
+import { trpc } from '@/lib/trpc';
 
 export const StuffListPage = () => {
   const { data, error, isLoading, isError } = trpc.getStuff.useQuery();
