@@ -1,14 +1,35 @@
+import { trpc } from '@/lib/trpc';
 import type { StuffRouteParams } from '@/router/routes';
 import { useParams } from 'react-router';
 
 export const StuffPage = () => {
   const { stuffName } = useParams() as StuffRouteParams;
 
+  const { data, error, isLoading, isError } = trpc.getStuff.useQuery({
+    name: stuffName,
+  });
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>error: {error.message}</span>;
+  }
+
+  if (data?.foundStuff === null) {
+    return <span>Stuff not found</span>;
+  }
+
   return (
     <div>
       <div>
         <h1>stuff page</h1>
-        <h2>{stuffName}</h2>
+        <div key={data?.foundStuff?.name}>
+          <h2>{data?.foundStuff?.name}</h2>
+          <p>{data?.foundStuff?.tags.join(' | ')}</p>
+          <p>{data?.foundStuff?.description}</p>
+        </div>
       </div>
     </div>
   );

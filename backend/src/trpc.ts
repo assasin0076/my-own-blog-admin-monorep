@@ -1,4 +1,5 @@
 import { initTRPC } from '@trpc/server';
+import { z } from 'zod';
 
 type Stuff = {
   name: string;
@@ -30,9 +31,24 @@ const stuff: Stuff[] = [
 const tprc = initTRPC.create();
 
 export const trpcRouter = tprc.router({
-  getStuff: tprc.procedure.query(() => {
+  getStuffs: tprc.procedure.query(() => {
     return { stuff };
   }),
+  getStuff: tprc.procedure
+    .input(
+      z.object({
+        name: z.string(),
+      })
+    )
+    .query(({ input }) => {
+      const foundStuff = stuff.find((s) => s.name === input.name);
+
+      if (!foundStuff) {
+        throw new Error('Stuff not found');
+      }
+
+      return { foundStuff: foundStuff || null };
+    }),
 });
 
 export type TrpcRouter = typeof trpcRouter;

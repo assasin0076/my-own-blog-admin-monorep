@@ -3,7 +3,7 @@ import { getStuffRoute } from '@/router/routes';
 import { Link } from 'react-router';
 
 export const StuffListPage = () => {
-  const { data, error, isLoading, isError } = trpc.getStuff.useQuery();
+  const { data, error, isLoading, isError } = trpc.getStuffs.useQuery();
 
   if (isLoading) {
     return <span>Loading...</span>;
