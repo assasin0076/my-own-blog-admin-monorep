@@ -1,0 +1,17 @@
+.layout-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: var(--sidebar-width-open) auto;
+  position: relative;
+}
+
+
+
+.sidebar-container {
+  width: var(--sidebar-width-open);
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-right: 1px solid var(--border-color-dark);
+}

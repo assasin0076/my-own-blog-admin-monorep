@@ -1,0 +1,20 @@
+@mixin link {
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    color: peachpuff;
+  }
+}
+
+@mixin font-md {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 500;
+}
+
+@mixin font-lg {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 500;
+}
