@@ -4,6 +4,9 @@ pre-commit:
     lint:
       run: pnpm lint
 
+    stylelint:
+      run: pnpm f stylelint
+
     format:
       run: pnpm format
 

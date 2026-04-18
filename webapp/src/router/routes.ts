@@ -12,6 +12,7 @@ const getRouteParams = <T extends Record<string, boolean>>(object: T) => {
 
 export const getMainRoute = () => '/';
 export const getStuffListRoute = () => '/stuff';
+export const getStuffNewtRoute = () => '/stuff/new';
 
 export const stuffRouteParams = getRouteParams({
   stuffName: true,

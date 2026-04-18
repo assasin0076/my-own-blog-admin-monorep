@@ -1,7 +1,6 @@
 import { trpc } from '@/lib/trpc';
-import { getStuffRoute } from '@/router/routes';
-import { Link } from 'react-router';
 import styles from './index.module.scss';
+import { StuffSegment } from '@/components/StuffSegment';
 
 export const StuffListPage = () => {
   const { data, error, isLoading, isError } = trpc.getStuffs.useQuery();
@@ -23,20 +22,12 @@ export const StuffListPage = () => {
       <div className={styles.list}>
         {data?.stuff.map((stuff) => {
           return (
-            <div key={stuff.name} className={styles.item}>
-              <h2>
-                <Link
-                  to={{
-                    pathname: getStuffRoute({ stuffName: stuff.name }),
-                  }}
-                  className={styles.link}
-                >
-                  {stuff.name}
-                </Link>
-              </h2>
-              <p>{stuff.tags.join(' | ')}</p>
-              <p>{stuff.description}</p>
-            </div>
+            <StuffSegment
+              key={stuff.name}
+              title={stuff.name}
+              description={stuff.description}
+              tags={stuff.tags}
+            />
           );
         })}
       </div>

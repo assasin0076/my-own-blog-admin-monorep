@@ -1,6 +1,6 @@
 import styles from './index.module.scss';
 import { Link } from 'react-router';
-import { getMainRoute, getStuffListRoute } from '@/router/routes.ts';
+import { getMainRoute, getStuffListRoute, getStuffNewtRoute } from '@/router/routes.ts';
 
 export const Sidebar = () => {
   return (
@@ -15,6 +15,11 @@ export const Sidebar = () => {
         <div className={styles['sidebar--element']}>
           <Link to={getStuffListRoute()} className={styles.link}>
             Проекты
+          </Link>
+        </div>
+        <div className={styles['sidebar--element']}>
+          <Link to={getStuffNewtRoute()} className={styles.link}>
+            Добавить проект
           </Link>
         </div>
       </div>
