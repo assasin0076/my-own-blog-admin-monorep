@@ -15,6 +15,7 @@ export const FormInput = ({
 
   const value = formik.values[name];
   const error = formik.errors[name] as string | undefined;
+  const touched = formik.touched[name] as boolean;
 
   return (
     <div className={css.field}>
@@ -22,11 +23,14 @@ export const FormInput = ({
       <input
         type="text"
         onChange={(e) => void formik.setFieldValue(name, e.target.value)}
+        onBlur={() => {
+          void formik.setFieldTouched(name);
+        }}
         value={value}
         name={inputId}
         id={inputId}
       />
-      <div className={css.error}>{error ?? ''}</div>
+      <div className={css.error}>{error && touched ? error : ''}</div>
     </div>
   );
 };

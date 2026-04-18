@@ -2,6 +2,7 @@ import css from './index.module.scss';
 import { FormInput } from '@/components/form/FormInput';
 import { FormTextarea } from '@/components/form/FormTextarea';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 export const NewStuffPage = () => {
   const stateDefaultValues = {
@@ -11,28 +12,18 @@ export const NewStuffPage = () => {
     repoLink: '',
     viewLink: '',
   };
+  const validationSchema = Yup.object({
+    label: Yup.string().required('Лейбл пуст'),
+    description: Yup.string().required('Описание пусто'),
+    tags: Yup.string().required('Теги пусты'),
+    repoLink: Yup.string().required('Ссылка на репозиторий пуста'),
+  });
+
   const formik = useFormik({
     initialValues: {
       ...stateDefaultValues,
     },
-    validate: (values) => {
-      const errors: Partial<typeof values> = {};
-
-      if (!values.label) {
-        errors.label = 'Лейбл пуст';
-      }
-      if (!values.description) {
-        errors.description = 'Описание пусто';
-      }
-      if (!values.tags) {
-        errors.tags = 'Теги пусты';
-      }
-      if (!values.repoLink) {
-        errors.repoLink = 'Ссылка на репозиторий пуста';
-      }
-
-      return errors;
-    },
+    validationSchema: validationSchema,
     onSubmit: (values) => {
       console.info('Submitted', values);
     },
