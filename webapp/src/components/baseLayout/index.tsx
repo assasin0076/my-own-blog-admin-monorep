@@ -1,15 +1,17 @@
 import { Outlet } from 'react-router';
-import styles from './index.module.scss';
+import css from './index.module.scss';
 import { Sidebar } from '@/components/Sidebar';
 
 export const BaseLayout = () => {
   return (
-    <div className={styles['layout-container']}>
-      <div className={styles['sidebar-container']}>
+    <div className={css.layout}>
+      <div className={css.sidebar}>
         <Sidebar />
       </div>
-      <div className={styles['sidebar-fake']} />
-      <Outlet />
+      <div className={css.fake} />
+      <div className={css.page}>
+        <Outlet />
+      </div>
     </div>
   );
 };

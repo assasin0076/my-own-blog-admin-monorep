@@ -7,6 +7,14 @@
   }
 }
 
+@mixin button {
+  background-color: var(--input-background);
+  color: var(--text-color-dark);
+  cursor: pointer;
+  padding: 10px 8px;
+  border-radius: 8px;
+}
+
 @mixin font-md {
   font-size: 18px;
   line-height: 22px;

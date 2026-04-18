@@ -1,0 +1,27 @@
+.field {
+  --fields-paddings: 8px 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  line-height: 20px;
+
+  input {
+    background-color: var(--input-background);
+    outline: none;
+    box-shadow: none;
+    border: 2px solid var(--border-color-dark);
+    color: var(--text-color-dark);
+  }
+
+  input[type='text'] {
+    padding: var(--fields-paddings);
+    border-radius: 8px;
+  }
+
+  .error {
+    height: 20px;
+    color: var(--text-color-error);
+  }
+}
