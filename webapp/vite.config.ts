@@ -7,8 +7,11 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
+      '@backend': path.resolve(__dirname, '../backend/src'),
       '@frontend': path.resolve(__dirname, './src'),
     },
+    mainFields: ['module', 'main'],
+    extensions: ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json'],
   },
   css: {
     preprocessorOptions: {

@@ -2,19 +2,11 @@ import css from './index.module.scss';
 import { FormInput } from '@frontend/components/form/FormInput';
 import { FormTextarea } from '@frontend/components/form/FormTextarea';
 import { useFormik } from 'formik';
-import { z } from 'zod';
 import { trpc } from '@frontend/lib/trpc.ts';
+import { zCreateTrpcStuffInput } from '@my-own-blog-admin-pannel/backend/router/createStuff/input';
 
 export const NewStuffPage = () => {
   const createStuff = trpc.createStuff.useMutation();
-
-  const schema = z.object({
-    label: z.string().min(1, 'Лейбл пуст'),
-    description: z.string().min(1, 'Описание пусто'),
-    tags: z.string().min(1, 'Теги пусты'),
-    repoLink: z.string().min(1, 'Ссылка на репозиторий пуста'),
-    viewLink: z.string().optional(),
-  });
 
   const initialValues = {
     label: '',
@@ -28,7 +20,7 @@ export const NewStuffPage = () => {
     initialValues,
 
     validate: (values) => {
-      const result = schema.safeParse(values);
+      const result = zCreateTrpcStuffInput.safeParse(values);
 
       if (result.success) return {};
 
