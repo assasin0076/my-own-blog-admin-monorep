@@ -5,11 +5,11 @@ import { z } from 'zod';
 export const getStuffTrpcRoute = trpcBackend.procedure
   .input(
     z.object({
-      name: z.string(),
+      label: z.string(),
     })
   )
   .query(({ input }) => {
-    const foundStuff = stuff.find((s) => s.name === input.name);
+    const foundStuff = stuff.find((s) => s.label === input.label);
 
     if (!foundStuff) {
       throw new Error('Stuff not found');

@@ -6,7 +6,7 @@ export const StuffPage = () => {
   const { stuffName } = useParams() as StuffRouteParams;
 
   const { data, error, isLoading, isError } = trpc.getStuff.useQuery({
-    name: stuffName,
+    label: stuffName,
   });
 
   if (isLoading) {
@@ -25,8 +25,8 @@ export const StuffPage = () => {
     <div>
       <div>
         <h1>stuff page</h1>
-        <div key={data?.foundStuff?.name}>
-          <h2>{data?.foundStuff?.name}</h2>
+        <div key={data?.foundStuff?.label}>
+          <h2>{data?.foundStuff?.label}</h2>
           <p>{data?.foundStuff?.tags.join(' | ')}</p>
           <p>{data?.foundStuff?.description}</p>
         </div>

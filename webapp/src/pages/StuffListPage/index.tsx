@@ -23,8 +23,8 @@ export const StuffListPage = () => {
         {data?.stuff.map((stuff) => {
           return (
             <StuffSegment
-              key={stuff.name}
-              title={stuff.name}
+              key={stuff.label}
+              title={stuff.label}
               description={stuff.description}
               tags={stuff.tags}
             />

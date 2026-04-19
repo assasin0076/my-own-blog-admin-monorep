@@ -2,30 +2,50 @@ import css from './index.module.scss';
 import { FormInput } from '@frontend/components/form/FormInput';
 import { FormTextarea } from '@frontend/components/form/FormTextarea';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { z } from 'zod';
+import { trpc } from '@frontend/lib/trpc.ts';
 
 export const NewStuffPage = () => {
-  const stateDefaultValues = {
+  const createStuff = trpc.createStuff.useMutation();
+
+  const schema = z.object({
+    label: z.string().min(1, 'Лейбл пуст'),
+    description: z.string().min(1, 'Описание пусто'),
+    tags: z.string().min(1, 'Теги пусты'),
+    repoLink: z.string().min(1, 'Ссылка на репозиторий пуста'),
+    viewLink: z.string().optional(),
+  });
+
+  const initialValues = {
     label: '',
     description: '',
     tags: '',
     repoLink: '',
     viewLink: '',
   };
-  const validationSchema = Yup.object({
-    label: Yup.string().required('Лейбл пуст'),
-    description: Yup.string().required('Описание пусто'),
-    tags: Yup.string().required('Теги пусты'),
-    repoLink: Yup.string().required('Ссылка на репозиторий пуста'),
-  });
 
   const formik = useFormik({
-    initialValues: {
-      ...stateDefaultValues,
+    initialValues,
+
+    validate: (values) => {
+      const result = schema.safeParse(values);
+
+      if (result.success) return {};
+
+      const errors: Partial<typeof initialValues> = {};
+
+      result.error.issues.forEach((err) => {
+        const field = err.path[0] as keyof typeof initialValues;
+        if (field) {
+          errors[field] = err.message;
+        }
+      });
+
+      return errors;
     },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.info('Submitted', values);
+
+    onSubmit: async (values) => {
+      await createStuff.mutateAsync(values);
     },
   });
 
