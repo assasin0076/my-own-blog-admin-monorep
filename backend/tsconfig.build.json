@@ -18,7 +18,7 @@
 
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.build.tsbuildinfo",
-    
+
     "skipLibCheck": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
