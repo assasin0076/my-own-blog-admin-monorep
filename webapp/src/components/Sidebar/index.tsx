@@ -1,6 +1,6 @@
 import styles from './index.module.scss';
 import { Link } from 'react-router';
-import { getMainRoute, getStuffListRoute, getStuffNewtRoute } from '@/router/routes.ts';
+import { getMainRoute, getStuffListRoute, getStuffNewtRoute } from '@frontend/router/routes.ts';
 
 export const Sidebar = () => {
   return (

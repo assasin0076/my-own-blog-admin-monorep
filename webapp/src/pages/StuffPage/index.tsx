@@ -1,5 +1,5 @@
-import { trpc } from '@/lib/trpc';
-import type { StuffRouteParams } from '@/router/routes';
+import { trpc } from '@frontend/lib/trpc';
+import type { StuffRouteParams } from '@frontend/router/routes';
 import { useParams } from 'react-router';
 
 export const StuffPage = () => {

@@ -1,10 +1,5 @@
 {
   "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"],
-      "@backend/*": ["../backend/*"],
-      "@project/*": ["../*"]
-    },
     "target": "ES2022",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
 
@@ -32,6 +27,7 @@
 
     "types": ["vite/client"]
   },
+  "extends": "../tsconfig.paths.json",
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

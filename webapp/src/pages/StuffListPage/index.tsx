@@ -1,6 +1,6 @@
-import { trpc } from '@/lib/trpc';
+import { trpc } from '@frontend/lib/trpc';
 import styles from './index.module.scss';
-import { StuffSegment } from '@/components/StuffSegment';
+import { StuffSegment } from '@frontend/components/StuffSegment';
 
 export const StuffListPage = () => {
   const { data, error, isLoading, isError } = trpc.getStuffs.useQuery();

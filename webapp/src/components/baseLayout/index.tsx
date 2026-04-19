@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 import css from './index.module.scss';
-import { Sidebar } from '@/components/Sidebar';
+import { Sidebar } from '@frontend/components/Sidebar';
 
 export const BaseLayout = () => {
   return (

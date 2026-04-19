@@ -7,13 +7,13 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@frontend': path.resolve(__dirname, './src'),
     },
   },
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use "@/styles/mixins" as *;`,
+        additionalData: `@use "@frontend/styles/mixins" as *;`,
       },
     },
   },

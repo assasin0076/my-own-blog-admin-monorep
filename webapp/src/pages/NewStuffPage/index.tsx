@@ -1,6 +1,6 @@
 import css from './index.module.scss';
-import { FormInput } from '@/components/form/FormInput';
-import { FormTextarea } from '@/components/form/FormTextarea';
+import { FormInput } from '@frontend/components/form/FormInput';
+import { FormTextarea } from '@frontend/components/form/FormTextarea';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 

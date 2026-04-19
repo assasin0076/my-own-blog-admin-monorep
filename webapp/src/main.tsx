@@ -1,9 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { TrpcProvider } from '@/lib/trpc.tsx';
+import { TrpcProvider } from '@frontend/lib/TrpcProvider.tsx';
 import { RouterProvider } from 'react-router/dom';
-import { router } from '@/router/index.ts';
-import '@/styles/global.scss';
+import { router } from '@frontend/router/index.ts';
+import '@frontend/styles/global.scss';
 
 const root = document.getElementById('root') as HTMLElement;
 

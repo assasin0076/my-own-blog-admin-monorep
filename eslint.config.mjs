@@ -31,7 +31,9 @@ export default defineConfig([
     files: ['backend/**/*.ts'],
     settings: {
       'import/resolver': {
-        typescript: './backend/tsconfig.json',
+        typescript: {
+          project: ['./tsconfig.paths.json', './backend/tsconfig.json'],
+        },
       },
     },
     languageOptions: {
@@ -138,7 +140,9 @@ export default defineConfig([
         version: '19.0',
       },
       'import/resolver': {
-        typescript: {}, // uses <root>/tsconfig.json by default
+        typescript: {
+          project: ['./tsconfig.paths.json', './webapp/tsconfig.json'],
+        },
       },
     },
   },

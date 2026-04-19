@@ -2,6 +2,20 @@
   "name": "@my-own-blog-admin-pannel/backend",
   "private": true,
   "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.js"
+    },
+    "./router": {
+      "types": "./dist/router/index.d.ts",
+      "require": "./dist/router/index.js",
+      "import": "./dist/router/index.js"
+    }
+  },
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
     "build": " rimraf ./dist && tsc -b ./tsconfig.json",

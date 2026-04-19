@@ -1,10 +1,10 @@
-import { MainPage } from '@/pages/MainPage';
-import { StuffListPage } from '@/pages/StuffListPage';
-import { StuffPage } from '@/pages/StuffPage';
+import { MainPage } from '@frontend/pages/MainPage';
+import { StuffListPage } from '@frontend/pages/StuffListPage';
+import { StuffPage } from '@frontend/pages/StuffPage';
 import { createBrowserRouter } from 'react-router';
 import { getMainRoute, getStuffListRoute, getStuffNewtRoute, getStuffRoute } from './routes';
-import { BaseLayout } from '@/components/baseLayout';
-import { NewStuffPage } from '@/pages/NewStuffPage';
+import { BaseLayout } from '@frontend/components/baseLayout';
+import { NewStuffPage } from '@frontend/pages/NewStuffPage';
 
 export const router = createBrowserRouter([
   {

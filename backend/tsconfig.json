@@ -1,14 +1,10 @@
 {
+  "extends": "../tsconfig.paths.json",
   "ts-node": {
     "files": true,
     "transpileOnly": true
   },
   "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"],
-      "@webapp/*": ["../webapp/*"],
-      "@project/*": ["../*"]
-    },
     "ignoreDeprecations": "6.0",
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
@@ -18,6 +14,7 @@
     "inlineSources": true,
     "isolatedModules": false,
     "declaration": true,
+    "declarationMap": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

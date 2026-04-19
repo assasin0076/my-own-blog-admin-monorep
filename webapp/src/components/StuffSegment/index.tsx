@@ -1,6 +1,6 @@
 import css from './index.module.scss';
 import { Link } from 'react-router';
-import { getStuffRoute } from '@/router/routes.ts';
+import { getStuffRoute } from '@frontend/router/routes.ts';
 
 export const StuffSegment = ({
   title,
