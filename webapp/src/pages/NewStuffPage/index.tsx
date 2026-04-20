@@ -20,6 +20,10 @@ export const NewStuffPage = () => {
   const [isSuccessMessageVisible, setSuccessMessageVisibility] = useState(false);
   const successTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const [isErrorMessageVisible, setErrorMessageVisibility] = useState(false);
+  const errorTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [errorMessage, setErrorMessage] = useState('');
+
   const formik = useFormik({
     initialValues,
 
@@ -50,7 +54,11 @@ export const NewStuffPage = () => {
           setSuccessMessageVisibility(false);
         }, 3000);
       } catch (error) {
-        console.error(error);
+        if (errorTimeoutRef.current) clearTimeout(errorTimeoutRef.current);
+        if (typeof error !== 'string') return;
+        setErrorMessage(error);
+        setErrorMessageVisibility(true);
+        errorTimeoutRef.current = setTimeout(() => setErrorMessageVisibility(false));
       }
     },
   });
@@ -72,6 +80,9 @@ export const NewStuffPage = () => {
         <FormInput label={'view link'} name={'viewLink'} formik={formik} />
         {formik.isSubmitting && <div className={css.info}>Отправка формы</div>}
         {isSuccessMessageVisible && <div className={css.success}>Успешно отправлено</div>}
+        {isErrorMessageVisible && (
+          <div className={css.success}>Произошла ошибка: {errorMessage}</div>
+        )}
         <button type="submit" className={css.button} disabled={formik.isSubmitting}>
           Создать
         </button>
