@@ -4,6 +4,7 @@ import { FormTextarea } from '@frontend/components/form/FormTextarea';
 import { useFormik } from 'formik';
 import { trpc } from '@frontend/lib/trpc.ts';
 import { zCreateTrpcStuffInput } from '@my-own-blog-admin-pannel/backend/router/createStuff/input';
+import { useRef, useState } from 'react';
 
 export const NewStuffPage = () => {
   const createStuff = trpc.createStuff.useMutation();
@@ -15,6 +16,9 @@ export const NewStuffPage = () => {
     repoLink: '',
     viewLink: '',
   };
+
+  const [isSuccessMessageVisible, setSuccessMessageVisibility] = useState(false);
+  const successTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const formik = useFormik({
     initialValues,
@@ -37,7 +41,17 @@ export const NewStuffPage = () => {
     },
 
     onSubmit: async (values) => {
-      await createStuff.mutateAsync(values);
+      try {
+        if (successTimeoutRef.current) clearTimeout(successTimeoutRef.current);
+        await createStuff.mutateAsync(values);
+        formik.resetForm();
+        setSuccessMessageVisibility(true);
+        successTimeoutRef.current = setTimeout(() => {
+          setSuccessMessageVisibility(false);
+        }, 3000);
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 
@@ -56,7 +70,8 @@ export const NewStuffPage = () => {
         <FormInput label={'tags'} name={'tags'} formik={formik} />
         <FormInput label={'repo link'} name={'repoLink'} formik={formik} />
         <FormInput label={'view link'} name={'viewLink'} formik={formik} />
-        {!formik.isSubmitting || <div className={css.info}>Отправка формы</div>}
+        {formik.isSubmitting && <div className={css.info}>Отправка формы</div>}
+        {isSuccessMessageVisible && <div className={css.success}>Успешно отправлено</div>}
         <button type="submit" className={css.button} disabled={formik.isSubmitting}>
           Создать
         </button>
