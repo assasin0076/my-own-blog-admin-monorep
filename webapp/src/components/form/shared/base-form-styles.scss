@@ -1,0 +1,28 @@
+.field {
+  --fields-paddings: 8px 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  line-height: 20px;
+
+  .input {
+    background-color: var(--input-background);
+    outline: none;
+    box-shadow: none;
+    color: var(--text-color-dark);
+    border: 2px solid var(--border-color-dark);
+    padding: var(--fields-paddings);
+    border-radius: 8px;
+
+    &:disabled {
+      background-color: var(--input-background-disabled);
+    }
+  }
+
+  .error {
+    height: 20px;
+    color: var(--text-color-error);
+  }
+}

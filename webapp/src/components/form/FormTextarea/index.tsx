@@ -25,9 +25,11 @@ export const FormTextarea = ({
         onBlur={() => {
           void formik.setFieldTouched(name);
         }}
+        className={css.input}
         value={value}
         name={inputId}
         id={inputId}
+        disabled={formik.isSubmitting}
       />
       <div className={css.error}>{error && touched ? error : ''}</div>
     </div>

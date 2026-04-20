@@ -22,6 +22,7 @@ export const FormInput = ({
       <label htmlFor={inputId}>{label}</label>
       <input
         type="text"
+        className={css.input}
         onChange={(e) => void formik.setFieldValue(name, e.target.value)}
         onBlur={() => {
           void formik.setFieldTouched(name);
@@ -29,6 +30,7 @@ export const FormInput = ({
         value={value}
         name={inputId}
         id={inputId}
+        disabled={formik.isSubmitting}
       />
       <div className={css.error}>{error && touched ? error : ''}</div>
     </div>

@@ -11,5 +11,9 @@
     .button {
       @include button;
     }
+
+    .info {
+      height: 20px;
+    }
   }
 }

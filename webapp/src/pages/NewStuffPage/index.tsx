@@ -56,7 +56,8 @@ export const NewStuffPage = () => {
         <FormInput label={'tags'} name={'tags'} formik={formik} />
         <FormInput label={'repo link'} name={'repoLink'} formik={formik} />
         <FormInput label={'view link'} name={'viewLink'} formik={formik} />
-        <button type="submit" className={css.button}>
+        {!formik.isSubmitting || <div className={css.info}>Отправка формы</div>}
+        <button type="submit" className={css.button} disabled={formik.isSubmitting}>
           Создать
         </button>
       </form>
