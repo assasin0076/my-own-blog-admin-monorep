@@ -8,8 +8,8 @@ datasource db {
 }
 
 model Stuff {
-  id          String  @id
-  label       String
+  id          String  @id @default(uuid())
+  label       String  @unique
   description String
   tags        String
   repoLink    String

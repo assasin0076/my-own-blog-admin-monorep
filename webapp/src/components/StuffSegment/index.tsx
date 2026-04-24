@@ -25,7 +25,7 @@ export const StuffSegment = ({
           {title}
         </Link>
       </h2>
-      <p>{tags.join(' | ')}</p>
+      <p>{tags}</p>
       <p>{description}</p>
       {children}
     </div>

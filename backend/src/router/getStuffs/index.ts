@@ -5,6 +5,7 @@ export const getStuffsTrpcRoute = trpcBackend.procedure.query(async ({ ctx }) =>
     select: {
       id: true,
       label: true,
+      tags: true,
       description: true,
       repoLink: true,
       viewLink: true,

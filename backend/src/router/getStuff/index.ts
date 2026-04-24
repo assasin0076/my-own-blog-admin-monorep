@@ -1,4 +1,3 @@
-import { stuff } from '@backend/lib/stuff';
 import { trpcBackend } from '@backend/lib/trpc';
 import { z } from 'zod';
 
@@ -8,8 +7,12 @@ export const getStuffTrpcRoute = trpcBackend.procedure
       label: z.string(),
     })
   )
-  .query(({ input }) => {
-    const foundStuff = stuff.find((s) => s.label === input.label);
+  .query(async ({ ctx, input }) => {
+    const foundStuff = await ctx.prisma.stuff.findUnique({
+      where: {
+        label: input.label,
+      },
+    });
 
     if (!foundStuff) {
       throw new Error('Stuff not found');

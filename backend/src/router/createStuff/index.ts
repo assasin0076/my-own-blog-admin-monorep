@@ -1,16 +1,21 @@
 import { trpcBackend } from '@backend/lib/trpc';
-import { stuff } from '@backend/lib/stuff';
 import { zCreateTrpcStuffInput } from '@backend/router/createStuff/input';
 
 export const createStuffTrpcRoute = trpcBackend.procedure
   .input(zCreateTrpcStuffInput)
-  .mutation(({ input }) => {
-    const formatedInput = {
-      ...input,
-      viewLink: input.viewLink ?? 'Не задана',
-      tags: input.tags.split('|'),
-    };
+  .mutation(async ({ ctx, input }) => {
+    const exStuff = await ctx.prisma.stuff.findUnique({
+      where: {
+        label: input.label,
+      },
+    });
 
-    stuff.unshift(formatedInput);
+    if (exStuff) {
+      throw new Error('Проект с таким названием уже существует');
+    }
+    await ctx.prisma.stuff.create({
+      data: input,
+    });
+
     return true;
   });

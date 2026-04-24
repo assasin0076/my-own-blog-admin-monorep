@@ -27,7 +27,7 @@ export const StuffPage = () => {
         <h1>stuff page</h1>
         <div key={data?.foundStuff?.label}>
           <h2>{data?.foundStuff?.label}</h2>
-          <p>{data?.foundStuff?.tags.join(' | ')}</p>
+          <p>{data?.foundStuff?.tags}</p>
           <p>{data?.foundStuff?.description}</p>
         </div>
       </div>
