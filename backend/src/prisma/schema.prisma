@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Stuff {
+  id          String  @id
+  label       String
+  description String
+  tags        String
+  repoLink    String
+  viewLink    String?
+}

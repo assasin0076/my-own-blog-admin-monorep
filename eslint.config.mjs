@@ -12,6 +12,9 @@ import eslintPluginImport from 'eslint-plugin-import';
 
 export default defineConfig([
   baseESLintIgnores,
+  {
+    ignores: ['backend/prisma.config.ts'],
+  },
   tseslint.configs.recommended,
   {
     languageOptions: {
