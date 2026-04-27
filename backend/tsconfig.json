@@ -1,6 +1,7 @@
 {
-  "extends": "../tsconfig.paths.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "..",
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",

@@ -9,7 +9,7 @@ export const StuffSegment = ({
   children,
 }: {
   title: string;
-  tags: string[];
+  tags: string;
   description: string;
   children?: React.ReactNode;
 }) => {

@@ -1,10 +1,8 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
-    "baseUrl": ".",
-    "paths": {
-      "@backend/*": ["./src/*"]
-    },
+    "baseUrl": "..",
     "rootDir": "./src",
     "outDir": "./dist",
 

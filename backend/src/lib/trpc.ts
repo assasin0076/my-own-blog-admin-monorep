@@ -3,8 +3,11 @@ import type { Express } from 'express';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import type { TrpcRouter } from '@backend/router';
 import type { PrismaContext } from './prisma';
+import SuperJSON from 'superjson';
 
-export const trpcBackend = initTRPC.context<PrismaContext>().create();
+export const trpcBackend = initTRPC.context<PrismaContext>().create({
+  transformer: SuperJSON,
+});
 
 export const applyTrpcToExpressApp = (
   expressApp: Express,

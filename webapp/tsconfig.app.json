@@ -27,7 +27,7 @@
 
     "types": ["vite/client"]
   },
-  "extends": "../tsconfig.paths.json",
+  "extends": "../tsconfig.json",
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

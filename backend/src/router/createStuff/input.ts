@@ -6,4 +6,5 @@ export const zCreateTrpcStuffInput = z.object({
   tags: z.string().min(1, 'Теги пусты'),
   repoLink: z.string().min(1, 'Ссылка на репозиторий пуста'),
   viewLink: z.string().optional(),
+  createdAt: z.string().optional(),
 });

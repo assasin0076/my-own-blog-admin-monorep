@@ -12,6 +12,15 @@ export const getStuffTrpcRoute = trpcBackend.procedure
       where: {
         label: input.label,
       },
+      select: {
+        id: true,
+        label: true,
+        tags: true,
+        description: true,
+        createdAt: true,
+        repoLink: true,
+        viewLink: true,
+      },
     });
 
     if (!foundStuff) {

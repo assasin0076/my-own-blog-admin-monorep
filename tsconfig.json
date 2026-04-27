@@ -1,5 +1,4 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
     "baseUrl": ".",
@@ -9,6 +8,5 @@
       "@project/*": ["./*"]
     },
     "lib": ["ES2023"]
-  },
-  "include": ["./*"]
+  }
 }

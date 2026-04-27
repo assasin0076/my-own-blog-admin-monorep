@@ -1,5 +1,6 @@
 import { trpc } from '@frontend/lib/trpc';
 import type { StuffRouteParams } from '@frontend/router/routes';
+import { format } from 'date-fns';
 import { useParams } from 'react-router';
 
 export const StuffPage = () => {
@@ -27,6 +28,12 @@ export const StuffPage = () => {
         <h1>stuff page</h1>
         <div key={data?.foundStuff?.label}>
           <h2>{data?.foundStuff?.label}</h2>
+          <p>
+            created at:{' '}
+            {data?.foundStuff?.createdAt
+              ? format(data?.foundStuff?.createdAt, 'MM/dd/yyyy')
+              : 'нет даты'}
+          </p>
           <p>{data?.foundStuff?.tags}</p>
           <p>{data?.foundStuff?.description}</p>
         </div>

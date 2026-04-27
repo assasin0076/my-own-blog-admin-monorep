@@ -10,6 +10,9 @@ export const getStuffsTrpcRoute = trpcBackend.procedure.query(async ({ ctx }) =>
       repoLink: true,
       viewLink: true,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
   return { stuff };
 });
