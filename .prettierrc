@@ -8,5 +8,6 @@
   "arrowParens": "always",
   "bracketSpacing": true,
   "jsxSingleQuote": false,
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "plugins": ["prettier-plugin-prisma"]
 }
