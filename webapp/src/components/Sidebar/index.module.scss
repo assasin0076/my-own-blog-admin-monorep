@@ -1,8 +1,10 @@
 .sidebar {
+  width: var(--sidebar-width-open);
+  height: 100%;
+  border-right: 1px solid var(--border-color-dark);
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 100%;
   padding: 8px 16px;
 
   .label {

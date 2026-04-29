@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: var(--header-height);
+  background-color: var(--background-dark);
+  border-bottom: 1px solid var(--border-color-dark);
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 16px;
+    margin-right: 60px;
+  }
+
+  .link {
+    @include link;
+  }
+}

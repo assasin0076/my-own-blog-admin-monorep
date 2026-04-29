@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
+      '@/*': path.resolve(__dirname, './src/*'),
       '@backend': path.resolve(__dirname, '../backend/src'),
       '@frontend': path.resolve(__dirname, './src'),
     },

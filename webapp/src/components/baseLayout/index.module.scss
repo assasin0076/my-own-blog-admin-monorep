@@ -2,15 +2,17 @@
   display: grid;
   width: 100%;
   grid-template-columns: var(--sidebar-width-open) auto;
+  grid-template-rows: var(--header-height) auto;
   position: relative;
 
-  .sidebar {
-    width: var(--sidebar-width-open);
+  .fixed {
     position: fixed;
     left: 0;
     top: 0;
+    display: grid;
+    grid-template-columns: max-content auto;
     height: 100%;
-    border-right: 1px solid var(--border-color-dark);
+    width: 100%;
   }
 
   .page {
