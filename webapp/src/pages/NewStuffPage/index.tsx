@@ -4,7 +4,8 @@ import { FormTextarea } from '@frontend/components/form/FormTextarea';
 import { useFormik } from 'formik';
 import { trpc } from '@frontend/lib/trpc.ts';
 import { zCreateTrpcStuffInput } from '@my-own-blog-admin-pannel/backend/router/createStuff/input';
-import { useRef, useState } from 'react';
+import { useTimedMessage } from '@frontend/hooks/useTimedMessage';
+import { FormButton } from '@frontend/components/form/FormButton';
 
 export const NewStuffPage = () => {
   const createStuff = trpc.createStuff.useMutation();
@@ -17,12 +18,12 @@ export const NewStuffPage = () => {
     viewLink: '',
   };
 
-  const [isSuccessMessageVisible, setSuccessMessageVisibility] = useState(false);
-  const successTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const [isErrorMessageVisible, setErrorMessageVisibility] = useState(false);
-  const errorTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [errorMessage, setErrorMessage] = useState('');
+  const { isVisible: isSuccessMessageVisible, show: showSuccessMessage } = useTimedMessage();
+  const {
+    isVisible: isErrorMessageVisible,
+    message: errorMessage,
+    show: showErrorMessage,
+  } = useTimedMessage();
 
   const formik = useFormik({
     initialValues,
@@ -46,19 +47,12 @@ export const NewStuffPage = () => {
 
     onSubmit: async (values) => {
       try {
-        if (successTimeoutRef.current) clearTimeout(successTimeoutRef.current);
         await createStuff.mutateAsync(values);
         formik.resetForm();
-        setSuccessMessageVisibility(true);
-        successTimeoutRef.current = setTimeout(() => {
-          setSuccessMessageVisibility(false);
-        }, 3000);
+        showSuccessMessage('Успешно отправлено');
       } catch (error) {
-        if (errorTimeoutRef.current) clearTimeout(errorTimeoutRef.current);
         if (typeof error !== 'string') return;
-        setErrorMessage(error);
-        setErrorMessageVisibility(true);
-        errorTimeoutRef.current = setTimeout(() => setErrorMessageVisibility(false));
+        showErrorMessage(`Произошла ошибка: ${error}`);
       }
     },
   });
@@ -80,12 +74,8 @@ export const NewStuffPage = () => {
         <FormInput label={'view link'} name={'viewLink'} formik={formik} />
         {formik.isSubmitting && <div className={css.info}>Отправка формы</div>}
         {isSuccessMessageVisible && <div className={css.success}>Успешно отправлено</div>}
-        {isErrorMessageVisible && (
-          <div className={css.success}>Произошла ошибка: {errorMessage}</div>
-        )}
-        <button type="submit" className={css.button} disabled={formik.isSubmitting}>
-          Создать
-        </button>
+        {isErrorMessageVisible && <div className={css.error}>Произошла ошибка: {errorMessage}</div>}
+        <FormButton label="Создать" type="submit" disabled={formik.isSubmitting} />
       </form>
     </div>
   );

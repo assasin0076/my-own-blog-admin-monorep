@@ -1,21 +1,14 @@
 .layout {
   display: grid;
-  width: 100%;
-  grid-template-columns: var(--sidebar-width-open) auto;
-  grid-template-rows: var(--header-height) auto;
-  position: relative;
-
-  .fixed {
-    position: fixed;
-    left: 0;
-    top: 0;
-    display: grid;
-    grid-template-columns: max-content auto;
-    height: 100%;
-    width: 100%;
-  }
+  min-height: 100vh;
+  grid-template-columns: var(--sidebar-width-open) 1fr;
+  grid-template-rows: var(--header-height) 1fr;
+  grid-template-areas:
+    'sidebar header'
+    'sidebar page';
 
   .page {
+    grid-area: page;
     padding: 20px;
   }
 }

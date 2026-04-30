@@ -13,6 +13,15 @@
   cursor: pointer;
   padding: 10px 8px;
   border-radius: 8px;
+
+  &:disabled {
+    background-color: var(--input-background-disabled);
+    cursor: not-allowed;
+  }
+
+  &:enabled:hover {
+    background-color: var(--input-background-hover);
+  }
 }
 
 @mixin font-md {

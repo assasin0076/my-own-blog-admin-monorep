@@ -6,13 +6,8 @@ import { Header } from '../Header';
 export const BaseLayout = () => {
   return (
     <div className={css.layout}>
-      <div className={css.fixed}>
-        <Sidebar />
-        <Header />
-      </div>
-      <div />
-      <div />
-      <div />
+      <Sidebar />
+      <Header />
       <div className={css.page}>
         <Outlet />
       </div>
