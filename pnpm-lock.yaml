@@ -175,6 +175,9 @@ importers:
       zod:
         specifier: ^4.3.6
         version: 4.3.6
+      zod-formik-adapter:
+        specifier: ^2.0.0
+        version: 2.0.0(formik@2.4.9(@types/react@19.2.14)(react@19.2.5))(zod@4.3.6)
     devDependencies:
       '@eslint/compat':
         specifier: ^2.0.5
@@ -3707,6 +3710,12 @@ packages:
 
   zeptomatch@2.1.0:
     resolution: {integrity: sha512-KiGErG2J0G82LSpniV0CtIzjlJ10E04j02VOudJsPyPwNZgGnRKQy7I1R7GMyg/QswnE4l7ohSGrQbQbjXPPDA==}
+
+  zod-formik-adapter@2.0.0:
+    resolution: {integrity: sha512-cLykLmQgmCmhx8C/mwR+rUNKRw6kEukejGRrByB+56zV1XtHF+xmOiQ2Lp2w5R0BdN3z42QKFekOI0Vy39vR8Q==}
+    peerDependencies:
+      formik: ^2.2.9
+      zod: 4.x
 
   zod-validation-error@4.0.2:
     resolution: {integrity: sha512-Q6/nZLe6jxuU80qb/4uJ4t5v2VEZ44lzQjPDhYJNztRQ4wyWc6VF3D3Kb/fAuPetZQnhS3hnajCf9CsWesghLQ==}
@@ -7326,6 +7335,11 @@ snapshots:
     dependencies:
       grammex: 3.1.12
       graphmatch: 1.1.1
+
+  zod-formik-adapter@2.0.0(formik@2.4.9(@types/react@19.2.14)(react@19.2.5))(zod@4.3.6):
+    dependencies:
+      formik: 2.4.9(@types/react@19.2.14)(react@19.2.5)
+      zod: 4.3.6
 
   zod-validation-error@4.0.2(zod@4.3.6):
     dependencies:

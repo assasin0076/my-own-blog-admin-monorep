@@ -6,6 +6,7 @@ import { trpc } from '@frontend/lib/trpc.ts';
 import { zCreateTrpcStuffInput } from '@my-own-blog-admin-pannel/backend/router/createStuff/input';
 import { useTimedMessage } from '@frontend/hooks/useTimedMessage';
 import { FormButton } from '@frontend/components/form/FormButton';
+import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 export const NewStuffPage = () => {
   const createStuff = trpc.createStuff.useMutation();
@@ -28,22 +29,7 @@ export const NewStuffPage = () => {
   const formik = useFormik({
     initialValues,
 
-    validate: (values) => {
-      const result = zCreateTrpcStuffInput.safeParse(values);
-
-      if (result.success) return {};
-
-      const errors: Partial<typeof initialValues> = {};
-
-      result.error.issues.forEach((err) => {
-        const field = err.path[0] as keyof typeof initialValues;
-        if (field) {
-          errors[field] = err.message;
-        }
-      });
-
-      return errors;
-    },
+    validationSchema: toFormikValidationSchema(zCreateTrpcStuffInput),
 
     onSubmit: async (values) => {
       try {

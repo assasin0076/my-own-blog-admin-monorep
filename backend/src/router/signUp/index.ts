@@ -1,6 +1,6 @@
 import { trpcBackend } from '@backend/lib/trpc';
 import { zSignUpInput } from './input';
-import crypto from 'crypto';
+import { getPasswordHash } from '@backend/utils/getPasswordHash';
 
 export const signUpRoute = trpcBackend.procedure
   .input(zSignUpInput)
@@ -17,7 +17,7 @@ export const signUpRoute = trpcBackend.procedure
     await ctx.prisma.user.create({
       data: {
         nick: input.nick,
-        password: crypto.createHash('sha256').update(input.password).digest('hex'),
+        password: getPasswordHash(input.password),
       },
     });
 

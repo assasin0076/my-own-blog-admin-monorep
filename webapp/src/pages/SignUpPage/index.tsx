@@ -5,6 +5,8 @@ import { trpc } from '@frontend/lib/trpc.ts';
 import { zSignUpInput } from '@my-own-blog-admin-pannel/backend/router/signUp/input';
 import { FormButton } from '@frontend/components/form/FormButton';
 import { useTimedMessage } from '@frontend/hooks/useTimedMessage';
+import { toFormikValidationSchema } from 'zod-formik-adapter';
+import z from 'zod';
 
 export const SignUpPage = () => {
   const signUp = trpc.signUp.useMutation();
@@ -12,6 +14,7 @@ export const SignUpPage = () => {
   const initialValues = {
     nick: '',
     password: '',
+    passwordAgain: '',
   };
 
   const {
@@ -28,22 +31,16 @@ export const SignUpPage = () => {
   const formik = useFormik({
     initialValues,
 
-    validate: (values) => {
-      const result = zSignUpInput.safeParse(values);
-
-      if (result.success) return {};
-
-      const errors: Partial<typeof initialValues> = {};
-
-      result.error.issues.forEach((err) => {
-        const field = err.path[0] as keyof typeof initialValues;
-        if (field) {
-          errors[field] = err.message;
-        }
-      });
-
-      return errors;
-    },
+    validationSchema: toFormikValidationSchema(
+      zSignUpInput
+        .extend({
+          passwordAgain: z.string().min(1),
+        })
+        .refine((data) => data.password === data.passwordAgain, {
+          message: 'Пароли должны совпадать',
+          path: ['passwordAgain'],
+        })
+    ),
 
     onSubmit: async (values) => {
       try {
@@ -69,6 +66,7 @@ export const SignUpPage = () => {
       >
         <FormInput label={'nick'} name={'nick'} formik={formik} />
         <FormInput label={'password'} name={'password'} formik={formik} />
+        <FormInput label={'passwordAgain'} name={'passwordAgain'} formik={formik} />
         {formik.isSubmitting && <div className={css.info}>Отправка формы</div>}
         {isSuccessMessageVisible && <div className={css.success}>{successMessage}</div>}
         {isErrorMessageVisible && <div className={css.error}>Произошла ошибка: {errorMessage}</div>}
