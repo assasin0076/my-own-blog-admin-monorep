@@ -1,6 +1,7 @@
 import { trpcBackend } from '@backend/lib/trpc';
 import { zSignInInput } from './input';
 import { getPasswordHash } from '@backend/utils/getPasswordHash';
+import { signJwt } from '@backend/utils/signJWT';
 
 export const signInTrpcRoute = trpcBackend.procedure
   .input(zSignInInput)
@@ -16,5 +17,7 @@ export const signInTrpcRoute = trpcBackend.procedure
       throw 'Пользователь с таким ником не найден';
     }
 
-    return true;
+    const token = signJwt(user.id);
+
+    return { token };
   });

@@ -7,21 +7,18 @@ import { FormButton } from '@frontend/components/form/FormButton';
 import { useTimedMessage } from '@frontend/hooks/useTimedMessage';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import z from 'zod';
+import { getStuffListRoute } from '@frontend/router/routes';
+import { useNavigate } from 'react-router';
 
 export const SignUpPage = () => {
   const signUp = trpc.signUp.useMutation();
+  const navigate = useNavigate();
 
   const initialValues = {
     nick: '',
     password: '',
     passwordAgain: '',
   };
-
-  const {
-    isVisible: isSuccessMessageVisible,
-    message: successMessage,
-    show: showSuccessMessage,
-  } = useTimedMessage();
   const {
     isVisible: isErrorMessageVisible,
     message: errorMessage,
@@ -46,7 +43,7 @@ export const SignUpPage = () => {
       try {
         await signUp.mutateAsync(values);
         formik.resetForm();
-        showSuccessMessage('Пользователь успешно зарегистрирован');
+        navigate(getStuffListRoute());
       } catch (error) {
         if (typeof error !== 'string') return;
         showErrorMessage(`Произошла ошибка: ${error}`);
@@ -68,7 +65,6 @@ export const SignUpPage = () => {
         <FormInput label={'password'} name={'password'} formik={formik} />
         <FormInput label={'passwordAgain'} name={'passwordAgain'} formik={formik} />
         {formik.isSubmitting && <div className={css.info}>Отправка формы</div>}
-        {isSuccessMessageVisible && <div className={css.success}>{successMessage}</div>}
         {isErrorMessageVisible && <div className={css.error}>Произошла ошибка: {errorMessage}</div>}
         <FormButton label="Создать" type="submit" disabled={formik.isSubmitting} />
       </form>

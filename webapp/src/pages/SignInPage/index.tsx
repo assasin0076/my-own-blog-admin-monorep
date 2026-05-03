@@ -2,23 +2,23 @@ import css from './index.module.scss';
 import { FormInput } from '@frontend/components/form/FormInput';
 import { useFormik } from 'formik';
 import { trpc } from '@frontend/lib/trpc.ts';
-import { zSignUpInput } from '@my-own-blog-admin-pannel/backend/router/signUp/input';
+import { zSignInInput } from '@my-own-blog-admin-pannel/backend/router/signIn/input';
 import { FormButton } from '@frontend/components/form/FormButton';
 import { useTimedMessage } from '@frontend/hooks/useTimedMessage';
+import { toFormikValidationSchema } from 'zod-formik-adapter';
+import { useNavigate } from 'react-router';
+import { getStuffListRoute } from '@frontend/router/routes';
 
 export const SignInPage = () => {
-  const signUp = trpc.signUp.useMutation();
+  const signIn = trpc.signIn.useMutation();
+
+  const navigate = useNavigate();
 
   const initialValues = {
     nick: '',
     password: '',
   };
 
-  const {
-    isVisible: isSuccessMessageVisible,
-    message: successMessage,
-    show: showSuccessMessage,
-  } = useTimedMessage();
   const {
     isVisible: isErrorMessageVisible,
     message: errorMessage,
@@ -28,28 +28,13 @@ export const SignInPage = () => {
   const formik = useFormik({
     initialValues,
 
-    validate: (values) => {
-      const result = zSignUpInput.safeParse(values);
-
-      if (result.success) return {};
-
-      const errors: Partial<typeof initialValues> = {};
-
-      result.error.issues.forEach((err) => {
-        const field = err.path[0] as keyof typeof initialValues;
-        if (field) {
-          errors[field] = err.message;
-        }
-      });
-
-      return errors;
-    },
+    validationSchema: toFormikValidationSchema(zSignInInput),
 
     onSubmit: async (values) => {
       try {
-        await signUp.mutateAsync(values);
+        await signIn.mutateAsync(values);
         formik.resetForm();
-        showSuccessMessage('Пользователь успешно зарегистрирован');
+        navigate(getStuffListRoute());
       } catch (error) {
         if (typeof error !== 'string') return;
         showErrorMessage(`Произошла ошибка: ${error}`);
@@ -70,7 +55,6 @@ export const SignInPage = () => {
         <FormInput label={'nick'} name={'nick'} formik={formik} />
         <FormInput label={'password'} name={'password'} formik={formik} />
         {formik.isSubmitting && <div className={css.info}>Отправка формы</div>}
-        {isSuccessMessageVisible && <div className={css.success}>{successMessage}</div>}
         {isErrorMessageVisible && <div className={css.error}>Произошла ошибка: {errorMessage}</div>}
         <FormButton label="Войти" type="submit" disabled={formik.isSubmitting} />
       </form>
