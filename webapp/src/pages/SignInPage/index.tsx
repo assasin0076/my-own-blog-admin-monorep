@@ -13,6 +13,7 @@ export const SignInPage = () => {
   const signIn = trpc.signIn.useMutation();
 
   const navigate = useNavigate();
+  const trpcUtils = trpc.useUtils();
 
   const initialValues = {
     nick: '',
@@ -34,6 +35,7 @@ export const SignInPage = () => {
       try {
         await signIn.mutateAsync(values);
         formik.resetForm();
+        trpcUtils.invalidate();
         navigate(getStuffListRoute());
       } catch (error) {
         if (typeof error !== 'string') return;

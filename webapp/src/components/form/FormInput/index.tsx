@@ -9,6 +9,7 @@ export const FormInput = ({
 }: {
   label: string;
   name: string;
+  // eslint-disable-next-line
   formik: FormikProps<any>;
 }) => {
   const inputId = _.uniqueId();

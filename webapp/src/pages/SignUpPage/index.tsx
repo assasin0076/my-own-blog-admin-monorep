@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router';
 export const SignUpPage = () => {
   const signUp = trpc.signUp.useMutation();
   const navigate = useNavigate();
+  const trpcUtils = trpc.useUtils();
 
   const initialValues = {
     nick: '',
@@ -43,6 +44,7 @@ export const SignUpPage = () => {
       try {
         await signUp.mutateAsync(values);
         formik.resetForm();
+        trpcUtils.invalidate();
         navigate(getStuffListRoute());
       } catch (error) {
         if (typeof error !== 'string') return;

@@ -137,6 +137,14 @@ export default defineConfig([
       'react/jsx-key': 'error',
       'react/jsx-no-duplicate-props': 'error',
       'react/self-closing-comp': 'error',
+
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: '[object.type=MetaProperty][property.name=env]',
+          message: 'Use instead import { env } from "@frontend/lib/env"',
+        },
+      ],
     },
     settings: {
       react: {
