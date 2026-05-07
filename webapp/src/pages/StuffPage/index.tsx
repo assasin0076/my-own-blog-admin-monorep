@@ -36,6 +36,8 @@ export const StuffPage = () => {
           </p>
           <p>{data?.foundStuff?.tags}</p>
           <p>{data?.foundStuff?.description}</p>
+          <hr />
+          <p>author: {data?.foundStuff?.author?.nick}</p>
         </div>
       </div>
     </div>
