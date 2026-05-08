@@ -1,24 +1,5 @@
 .page {
   display: flex;
   flex-direction: column;
-
-  .form {
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    .button {
-      @include button;
-    }
-
-    .info {
-      height: 20px;
-    }
-
-    .success {
-      height: 20px;
-      color: var(--text-color-success);
-    }
-  }
+  max-width: 400px;
 }
