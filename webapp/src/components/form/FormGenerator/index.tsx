@@ -20,7 +20,7 @@ type FormField = Readonly<{
 type formSchema = readonly FormField[];
 type FormGeneratorProps<TValues extends Values> = {
   formSchema: formSchema;
-  validationSchema: ReturnType<typeof z.object>;
+  validationSchema: z.ZodType<TValues>;
   onSubmit: (values: TValues) => Promise<unknown>;
   successMessage?: string;
 };

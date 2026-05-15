@@ -2,9 +2,10 @@ import { Link, useNavigate } from 'react-router';
 import styles from './index.module.scss';
 import { trpc } from '@frontend/lib/trpc';
 import { FormButton } from '../form/FormButton';
+import { useMe } from '@frontend/lib/ctx';
 
 export const Header = () => {
-  const { data, isLoading, isFetching, isError } = trpc.getMe.useQuery();
+  const me = useMe();
   const navigate = useNavigate();
   const tprcUtils = trpc.useUtils();
 
@@ -18,9 +19,9 @@ export const Header = () => {
   return (
     <div className={styles['header']}>
       <div className={styles['nav']}>
-        {isLoading || isFetching || isError ? null : data?.me ? (
+        {me ? (
           <>
-            <span className={styles['welcome']}>Добро пожаловать, {data.me.nick}!</span>
+            <span className={styles['welcome']}>Добро пожаловать, {me.nick}!</span>
             <FormButton onClick={() => logout.mutate()} label="Выйти" />
           </>
         ) : (

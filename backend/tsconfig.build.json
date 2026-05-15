@@ -25,5 +25,6 @@
     "types": ["node"]
   },
   "include": ["src/**/*"],
+  "references": [{ "path": "../shared" }],
   "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts"]
 }
