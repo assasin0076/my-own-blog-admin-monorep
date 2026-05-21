@@ -3,6 +3,7 @@ import { getMainRoute } from '@frontend/router/routes';
 import { type UseTRPCQuerySuccessResult, type UseTRPCQueryResult } from '@trpc/react-query/shared';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { ErrorComponent } from '../ErrorComponent';
 
 class CheckExistError extends Error {}
 const checkExistFn = <T,>(value: T, message?: string): NonNullable<T> => {
@@ -54,15 +55,6 @@ type PageWrapperProps<TProps extends Props, TQueryResult extends QueryResult | u
   Page: React.FC<TProps>;
 };
 
-const ErrorPageComponent = ({ title, message }: { title: string; message: string }) => {
-  return (
-    <div>
-      <h3>{title}</h3>
-      <p>{message}</p>
-    </div>
-  );
-};
-
 const PageWrapper = <
   TProps extends Props = Props,
   TQueryResult extends QueryResult | undefined = undefined,
@@ -105,7 +97,7 @@ const PageWrapper = <
   }
 
   if (authorizedOnly && !ctx.me) {
-    return <ErrorPageComponent title={authorizedOnlyTitle} message={authorizedOnlyMessage} />;
+    return <ErrorComponent title={authorizedOnlyTitle} message={authorizedOnlyMessage} />;
   }
 
   const helperProps = { ctx, queryResult: queryResult as never };
@@ -113,14 +105,14 @@ const PageWrapper = <
   if (checkAccess) {
     const accessDenied = !checkAccess(helperProps);
     if (accessDenied) {
-      return <ErrorPageComponent title={checkAccessTitle} message={checkAccessMessage} />;
+      return <ErrorComponent title={checkAccessTitle} message={checkAccessMessage} />;
     }
   }
 
   if (checkExists) {
     const notFound = !checkExists(helperProps);
     if (notFound) {
-      return <ErrorPageComponent title={checkExistsTitle} message={checkExistsMessage} />;
+      return <ErrorComponent title={checkExistsTitle} message={checkExistsMessage} />;
     }
   }
 
@@ -134,18 +126,12 @@ const PageWrapper = <
   } catch (error) {
     if (error instanceof CheckExistError) {
       return (
-        <ErrorPageComponent
-          title={checkExistsTitle}
-          message={error.message || checkExistsMessage}
-        />
+        <ErrorComponent title={checkExistsTitle} message={error.message || checkExistsMessage} />
       );
     }
     if (error instanceof CheckAccessError) {
       return (
-        <ErrorPageComponent
-          title={checkAccessTitle}
-          message={error.message || checkAccessMessage}
-        />
+        <ErrorComponent title={checkAccessTitle} message={error.message || checkAccessMessage} />
       );
     }
     throw error;

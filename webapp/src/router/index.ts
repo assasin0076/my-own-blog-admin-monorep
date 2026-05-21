@@ -14,6 +14,7 @@ import {
 } from './routes';
 import { BaseLayout } from '@frontend/components/baseLayout';
 import { NewStuffPage } from '@frontend/pages/NewStuffPage';
+import { NotFoundPage } from '@frontend/pages/NotFoundPage';
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: getStuffRoute({ stuffName: ':stuffName' }),
         Component: StuffPage,
+      },
+      {
+        path: '*',
+        Component: NotFoundPage,
       },
     ],
   },
