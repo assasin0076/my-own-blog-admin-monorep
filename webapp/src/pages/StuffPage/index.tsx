@@ -14,17 +14,23 @@ import type { StuffFormValues } from '@frontend/components/StuffForm';
 import { StuffForm } from '@frontend/components/StuffForm';
 import _ from 'lodash';
 import { convertStuffToFormValues } from './converters';
+import { withPageWrapper } from '@frontend/components/WithPageWrapper';
 
-export const StuffPage = () => {
+import type { inferRouterOutputs } from '@trpc/server';
+import type { TrpcRouter } from '@backend/router';
+
+type RouterOutputs = inferRouterOutputs<TrpcRouter>;
+type Stuff = RouterOutputs['getStuff']['foundStuff'];
+
+type StuffPageInnerProps = {
+  stuff: Stuff;
+};
+const StuffPageInner = ({ stuff }: StuffPageInnerProps) => {
   const { stuffName } = useParams() as StuffRouteParams;
 
   const utils = trpc.useUtils();
 
   const navigate = useNavigate();
-
-  const { data, error, isLoading, isError } = trpc.getStuff.useQuery({
-    label: stuffName,
-  });
 
   const updateStuff = trpc.updateStuff.useMutation();
 
@@ -32,7 +38,7 @@ export const StuffPage = () => {
 
   const updateStuffHandler = async (values: StuffFormValues): Promise<boolean> => {
     await updateStuff.mutateAsync({
-      id: data?.foundStuff?.id as string,
+      id: stuff?.id as string,
       ...values,
     });
 
@@ -45,67 +51,70 @@ export const StuffPage = () => {
     return true;
   };
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  } else if (isError) {
-    return <span>error: {error.message}</span>;
-  } else if (data?.foundStuff === null || !data) {
-    return <span>Stuff not found</span>;
-  } else {
-    return (
-      <div className={styles.page}>
-        {isEdit ? (
-          <div>
-            <h1 className={styles.header}>Редактирование проекта</h1>
+  return (
+    <div className={styles.page}>
+      {isEdit ? (
+        <div>
+          <h1 className={styles.header}>Редактирование проекта</h1>
 
-            <StuffForm
-              mode="edit"
-              onSubmit={updateStuffHandler}
-              initialValues={convertStuffToFormValues(data.foundStuff)}
-            />
+          <StuffForm
+            mode="edit"
+            onSubmit={updateStuffHandler}
+            initialValues={convertStuffToFormValues(stuff)}
+          />
 
-            <FormButton
-              className={styles['edit-button']}
-              onClick={() => setEdit(false)}
-              label="Отмена"
-            />
+          <FormButton
+            className={styles['edit-button']}
+            onClick={() => setEdit(false)}
+            label="Отмена"
+          />
+        </div>
+      ) : (
+        <div>
+          <h1>stuff page</h1>
+
+          <h2>{stuff?.label}</h2>
+
+          <div className={styles.info}>
+            <p>created at: </p>
+
+            <p>{stuff?.createdAt ? format(stuff?.createdAt, 'MM/dd/yyyy') : 'нет даты'}</p>
+
+            <p>tags: </p>
+
+            <p>{stuff?.tags}</p>
+
+            <p>description: </p>
+
+            <p>{stuff?.description}</p>
+
+            <p>author: </p>
+
+            <p>{stuff?.author?.nick}</p>
           </div>
-        ) : (
-          <div>
-            <h1>stuff page</h1>
 
-            <h2>{data?.foundStuff?.label}</h2>
-
-            <div className={styles.info}>
-              <p>created at: </p>
-
-              <p>
-                {data?.foundStuff?.createdAt
-                  ? format(data?.foundStuff?.createdAt, 'MM/dd/yyyy')
-                  : 'нет даты'}
-              </p>
-
-              <p>tags: </p>
-
-              <p>{data?.foundStuff?.tags}</p>
-
-              <p>description: </p>
-
-              <p>{data?.foundStuff?.description}</p>
-
-              <p>author: </p>
-
-              <p>{data?.foundStuff?.author?.nick}</p>
-            </div>
-
-            <FormButton
-              className={styles['edit-button']}
-              onClick={() => setEdit(true)}
-              label="Редактировать"
-            />
-          </div>
-        )}
-      </div>
-    );
-  }
+          <FormButton
+            className={styles['edit-button']}
+            onClick={() => setEdit(true)}
+            label="Редактировать"
+          />
+        </div>
+      )}
+    </div>
+  );
 };
+
+export const StuffPage = withPageWrapper({
+  authorizedOnly: true,
+  useQuery: () => {
+    const { stuffName } = useParams() as StuffRouteParams;
+
+    return trpc.getStuff.useQuery({
+      label: stuffName,
+    });
+  },
+  setProps: ({ queryResult, checkExists }) => {
+    const stuff = checkExists(queryResult.data.foundStuff, 'Не найден');
+    return { stuff };
+  },
+})(StuffPageInner);
