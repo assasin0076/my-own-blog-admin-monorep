@@ -15,6 +15,7 @@ export const getSignUpRoute = () => '/signup';
 export const getSignInRoute = () => '/signin';
 export const getStuffListRoute = () => '/stuff';
 export const getStuffNewtRoute = () => '/stuff/new';
+export const getProfileRoute = () => '/me';
 
 export const stuffRouteParams = getRouteParams({
   stuffName: true,

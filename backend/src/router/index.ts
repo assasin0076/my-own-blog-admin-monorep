@@ -7,6 +7,7 @@ import { signInTrpcRoute } from './signIn';
 import { getMeTrpcRoute } from './getMe';
 import { signOutTrpcRoute } from './signOut';
 import { updateStuffTrpcRoute } from './updateStuff';
+import { updateProfileTrpcRoute } from './updateProfile';
 
 export const trpcRouter = trpcBackend.router({
   getStuffs: getStuffsTrpcRoute,
@@ -17,6 +18,7 @@ export const trpcRouter = trpcBackend.router({
   getMe: getMeTrpcRoute,
   signOut: signOutTrpcRoute,
   updateStuff: updateStuffTrpcRoute,
+  updateProfile: updateProfileTrpcRoute,
 });
 
 export type TrpcRouter = typeof trpcRouter;

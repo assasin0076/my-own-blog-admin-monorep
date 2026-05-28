@@ -26,6 +26,7 @@ type StuffFormProps = {
   mode: 'edit' | 'create';
   initialValues?: StuffFormValues;
 };
+
 export const StuffForm = ({
   onSubmit,
   mode,

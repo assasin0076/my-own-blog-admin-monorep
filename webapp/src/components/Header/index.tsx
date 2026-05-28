@@ -21,7 +21,12 @@ export const Header = () => {
       <div className={styles['nav']}>
         {me ? (
           <>
-            <span className={styles['welcome']}>Добро пожаловать, {me.nick}!</span>
+            <span className={styles['welcome']}>
+              Добро пожаловать,
+              <Link to="/me" className={styles['link']}>
+                {me.nick}!
+              </Link>
+            </span>
             <FormButton onClick={() => logout.mutate()} label="Выйти" />
           </>
         ) : (

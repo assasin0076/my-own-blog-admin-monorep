@@ -1,0 +1,26 @@
+.page {
+  .page__data {
+    width: 600px;
+    padding: 12px;
+    border: 1px solid var(--border-color-dark);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+
+    .data__container {
+      margin-bottom: 16px;
+
+      .data__field {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        align-items: center;
+
+        .data__value {
+          padding: 6px;
+          border: 1px solid var(--border-color-dark);
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+}

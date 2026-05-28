@@ -11,10 +11,12 @@ import {
   getStuffListRoute,
   getStuffNewtRoute,
   getStuffRoute,
+  getProfileRoute,
 } from './routes';
 import { BaseLayout } from '@frontend/components/baseLayout';
 import { NewStuffPage } from '@frontend/pages/NewStuffPage';
 import { NotFoundPage } from '@frontend/pages/NotFoundPage';
+import { ProfilePage } from '@frontend/pages/ProfilePage';
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +45,10 @@ export const router = createBrowserRouter([
       {
         path: getStuffRoute({ stuffName: ':stuffName' }),
         Component: StuffPage,
+      },
+      {
+        path: getProfileRoute(),
+        Component: ProfilePage,
       },
       {
         path: '*',
