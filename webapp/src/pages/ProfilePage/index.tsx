@@ -1,5 +1,4 @@
 import { withPageWrapper } from '@frontend/components/WithPageWrapper';
-import { useMe } from '@frontend/lib/ctx';
 import css from './index.module.scss';
 import { FormButton } from '@frontend/components/form/FormButton';
 import { useState } from 'react';
@@ -10,8 +9,12 @@ import { trpc } from '@frontend/lib/trpc';
 import type z from 'zod';
 import { FormInput } from '@frontend/components/form/FormInput';
 
-const ProfilePageInner = () => {
-  const me = useMe();
+export const ProfilePage = withPageWrapper({
+  authorizedOnly: true,
+  setProps: ({ getAuthorizedMe }) => ({
+    me: getAuthorizedMe(),
+  }),
+})(({ me }) => {
   const [isEdit, setIsEdit] = useState(false);
   const initialValues = {
     id: me!.id,
@@ -83,8 +86,4 @@ const ProfilePageInner = () => {
       </div>
     </div>
   );
-};
-
-export const ProfilePage = withPageWrapper({
-  authorizedOnly: true,
-})(ProfilePageInner);
+});

@@ -16,16 +16,20 @@ import _ from 'lodash';
 import { convertStuffToFormValues } from './converters';
 import { withPageWrapper } from '@frontend/components/WithPageWrapper';
 
-import type { inferRouterOutputs } from '@trpc/server';
-import type { TrpcRouter } from '@backend/router';
+export const StuffPage = withPageWrapper({
+  authorizedOnly: true,
+  useQuery: () => {
+    const { stuffName } = useParams() as StuffRouteParams;
 
-type RouterOutputs = inferRouterOutputs<TrpcRouter>;
-type Stuff = RouterOutputs['getStuff']['foundStuff'];
-
-type StuffPageInnerProps = {
-  stuff: Stuff;
-};
-const StuffPageInner = ({ stuff }: StuffPageInnerProps) => {
+    return trpc.getStuff.useQuery({
+      label: stuffName,
+    });
+  },
+  setProps: ({ queryResult, checkExists }) => {
+    const stuff = checkExists(queryResult.data.foundStuff, 'Не найден');
+    return { stuff };
+  },
+})(({ stuff }) => {
   const { stuffName } = useParams() as StuffRouteParams;
 
   const utils = trpc.useUtils();
@@ -102,19 +106,4 @@ const StuffPageInner = ({ stuff }: StuffPageInnerProps) => {
       )}
     </div>
   );
-};
-
-export const StuffPage = withPageWrapper({
-  authorizedOnly: true,
-  useQuery: () => {
-    const { stuffName } = useParams() as StuffRouteParams;
-
-    return trpc.getStuff.useQuery({
-      label: stuffName,
-    });
-  },
-  setProps: ({ queryResult, checkExists }) => {
-    const stuff = checkExists(queryResult.data.foundStuff, 'Не найден');
-    return { stuff };
-  },
-})(StuffPageInner);
+});
