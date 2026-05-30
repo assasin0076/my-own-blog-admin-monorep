@@ -9,6 +9,9 @@
 
     .data__container {
       margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 8px;
 
       .data__field {
         display: grid;
@@ -21,6 +24,12 @@
           border-radius: 4px;
         }
       }
+    }
+
+    .form__buttons {
+      display: flex;
+      flex-direction: column;
+      row-gap: 8px;
     }
   }
 }
