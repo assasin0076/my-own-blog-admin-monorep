@@ -1,11 +1,30 @@
 import { trpc } from '@frontend/lib/trpc';
 import styles from './index.module.scss';
 import { StuffSegment } from '@frontend/components/StuffSegment';
+import { FormButton } from '@frontend/components/form/FormButton';
 
 export const StuffListPage = () => {
-  const { data, error, isLoading, isError } = trpc.getStuffs.useQuery();
+  const {
+    data,
+    error,
+    isLoading,
+    isError,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isRefetching,
+  } = trpc.getStuffs.useInfiniteQuery(
+    {
+      limit: 2,
+    },
+    {
+      getNextPageParam: (lastPage) => {
+        return lastPage.nextCursor;
+      },
+    }
+  );
 
-  if (isLoading) {
+  if (isLoading || isRefetching) {
     return <span>Loading...</span>;
   }
 
@@ -20,16 +39,29 @@ export const StuffListPage = () => {
         <p>Список проектов</p>
       </div>
       <div className={styles.list}>
-        {data?.stuff.map((stuff) => {
-          return (
-            <StuffSegment
-              key={stuff.label}
-              title={stuff.label}
-              description={stuff.description}
-              tags={stuff.tags}
+        {data?.pages
+          .flatMap((page) => page.stuff)
+          .map((stuff) => {
+            return (
+              <StuffSegment
+                key={stuff.label}
+                title={stuff.label}
+                description={stuff.description}
+                tags={stuff.tags}
+              />
+            );
+          })}
+        <div className={styles.more}>
+          {hasNextPage && !isFetchingNextPage && (
+            <FormButton
+              label="еще"
+              onClick={(e) => {
+                e.preventDefault();
+                void fetchNextPage();
+              }}
             />
-          );
-        })}
+          )}
+        </div>
       </div>
     </div>
   );

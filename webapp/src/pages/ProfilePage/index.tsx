@@ -109,73 +109,68 @@ export const ProfilePage = withPageWrapper({
     formikEdit.resetForm();
     formikPassword.resetForm();
   };
+
+  const formViews = {
+    base: (
+      <div className={css.page__data}>
+        <div className={css.data__container}>
+          <div className={css.data__field}>
+            <div className={css.data__label}>Никнейм:</div>
+            <div className={css.data__value}>{me?.nick ?? 'Нет никнейма'}</div>
+          </div>
+        </div>
+        <div className={css.form__buttons}>
+          <FormButton
+            label="Изменить пароль"
+            className={css.data__button}
+            onClick={handleChangePassword}
+          />
+          <FormButton label="Редактировать" className={css.data__button} onClick={handleEdit} />
+        </div>
+      </div>
+    ),
+    edit: (
+      <div className={css.page__data}>
+        <div className={css.data__container}>
+          <div className={css.data__field}>
+            <div className={css.data__label}>Никнейм:</div>
+            <FormInput label="" name="nick" formik={formikEdit} />
+          </div>
+        </div>
+        <div className={css.form__buttons}>
+          <FormButton label="Отменить" className={css.data__button} onClick={handleReset} />
+          <FormButton label="Сохранить" className={css.data__button} onClick={handleSaveEdit} />
+        </div>
+      </div>
+    ),
+    changePassword: (
+      <div className={css.page__data}>
+        <div className={css.data__container}>
+          <div className={css.data__field}>
+            <div className={css.data__label}>Старый пароль:</div>
+            <FormInput label="" name="oldPassword" formik={formikPassword} />
+          </div>
+          <div className={css.data__field}>
+            <div className={css.data__label}>Новый пароль:</div>
+            <FormInput label="" name="newPassword" formik={formikPassword} />
+          </div>
+          <div className={css.data__field}>
+            <div className={css.data__label}>Повторите новый пароль:</div>
+            <FormInput label="" name="newPasswordAgain" formik={formikPassword} />
+          </div>
+        </div>
+        <div className={css.form__buttons}>
+          <FormButton label="Отменить" className={css.data__button} onClick={handleReset} />
+          <FormButton label="Сохранить" className={css.data__button} onClick={handleSavePassword} />
+        </div>
+      </div>
+    ),
+  };
+
   return (
     <div className={css.page}>
       <h2>Профиль</h2>
-      {mode === 'base' ? (
-        <div className={css.page__data}>
-          <div className={css.data__container}>
-            <div className={css.data__field}>
-              <div className={css.data__label}>Никнейм:</div>
-              <div className={css.data__value}>{me?.nick ?? 'Нет никнейма'}</div>
-            </div>
-          </div>
-          <div className={css.form__buttons}>
-            <FormButton
-              label="Изменить пароль"
-              className={css.data__button}
-              onClick={handleChangePassword}
-            />
-            <FormButton label="Редактировать" className={css.data__button} onClick={handleEdit} />
-          </div>
-        </div>
-      ) : (
-        ''
-      )}
-      {mode === 'edit' ? (
-        <div className={css.page__data}>
-          <div className={css.data__container}>
-            <div className={css.data__field}>
-              <div className={css.data__label}>Никнейм:</div>
-              <FormInput label="" name="nick" formik={formikEdit} />
-            </div>
-          </div>
-          <div className={css.form__buttons}>
-            <FormButton label="Отменить" className={css.data__button} onClick={handleReset} />
-            <FormButton label="Сохранить" className={css.data__button} onClick={handleSaveEdit} />
-          </div>
-        </div>
-      ) : (
-        ''
-      )}
-      {mode === 'changePassword' ? (
-        <div className={css.page__data}>
-          <div className={css.data__container}>
-            <div className={css.data__field}>
-              <div className={css.data__label}>Старый пароль:</div>
-              <FormInput label="" name="oldPassword" formik={formikPassword} />
-            </div>
-            <div className={css.data__field}>
-              <div className={css.data__label}>Новый пароль:</div>
-              <FormInput label="" name="newPassword" formik={formikPassword} />
-            </div>
-            <div className={css.data__field}>
-              <div className={css.data__label}>Повторите новый пароль:</div>
-              <FormInput label="" name="newPasswordAgain" formik={formikPassword} />
-            </div>
-          </div>
-          <div className={css.form__buttons}>
-            <FormButton label="Отменить" className={css.data__button} onClick={handleReset} />
-            <FormButton
-              label="Сохранить"
-              className={css.data__button}
-              onClick={handleSavePassword}
-            />
-          </div>
-        </div>
-      ) : (
-        ''
-      )}
+      {formViews[mode]}
     </div>
   );
 });
