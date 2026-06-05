@@ -2,8 +2,25 @@ import { trpc } from '@frontend/lib/trpc';
 import styles from './index.module.scss';
 import { StuffSegment } from '@frontend/components/StuffSegment';
 import { useEffect, useRef } from 'react';
+import { FormInput } from '@frontend/components/form/FormInput';
+import { useFormik } from 'formik';
+import { toFormikValidationSchema } from 'zod-formik-adapter';
+import { zGetStuffsTrpcInput } from '@backend/router/getStuffs/input';
+import { useDebounce } from '@uidotdev/usehooks';
 
 export const StuffListPage = () => {
+  const initialValues = {
+    search: '',
+  };
+  const formik = useFormik({
+    initialValues,
+    validationSchema: toFormikValidationSchema(zGetStuffsTrpcInput.pick({ search: true })),
+    onSubmit() {
+      return;
+    },
+  });
+  const debouncedSearch = useDebounce(formik.values.search, 300);
+
   const {
     data,
     error,
@@ -15,7 +32,7 @@ export const StuffListPage = () => {
     isRefetching,
   } = trpc.getStuffs.useInfiniteQuery(
     {
-      limit: 2,
+      search: debouncedSearch,
     },
     {
       getNextPageParam: (lastPage) => {
@@ -47,20 +64,18 @@ export const StuffListPage = () => {
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  if (isLoading || isRefetching) {
-    return <span>Loading...</span>;
-  }
+  const defineMapState = () => {
+    if (isLoading || isRefetching) return 'loading';
+    if (isError) return 'error';
+    return 'default';
+  };
 
-  if (isError) {
-    return <span>error: {error.message}</span>;
-  }
-
-  return (
-    <div className={styles.page}>
-      <div>
-        <h1>stuff list page</h1>
-        <p>Список проектов</p>
-      </div>
+  const statesMap = {
+    error: () => {
+      if (isError) return <span>error: {error.message}</span>;
+    },
+    loading: () => <span>Loading...</span>,
+    default: () => (
       <div className={styles.list}>
         {flatStuff.map((stuff) => {
           return (
@@ -75,6 +90,19 @@ export const StuffListPage = () => {
         <div ref={loaderRef} />
         {isFetchingNextPage && <p>Загрузка...</p>}
       </div>
+    ),
+  };
+
+  return (
+    <div className={styles.page}>
+      <div>
+        <h1>stuff list page</h1>
+        <p>Список проектов</p>
+      </div>
+      <div>
+        <FormInput name="search" label="Поиск" formik={formik} />
+      </div>
+      {statesMap[defineMapState()]()}
     </div>
   );
 };

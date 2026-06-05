@@ -1,4 +1,6 @@
 .page {
+  max-width: 600px;
+
   .list {
     display: flex;
     flex-direction: column;
@@ -8,7 +10,6 @@
       padding: 16px 22px;
       border: 1px solid var(--border-color-dark);
       border-radius: 8px;
-      max-width: 600px;
 
       .link {
         @include link;
