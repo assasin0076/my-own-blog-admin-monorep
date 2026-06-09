@@ -1,3 +1,4 @@
+import { Loader } from '@frontend/components/Loader';
 import css from './index.module.scss';
 import clsx from 'clsx';
 
@@ -7,6 +8,7 @@ interface FormButtonProps {
   className?: string;
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  isLoading?: boolean;
 }
 
 export const FormButton = ({
@@ -15,15 +17,17 @@ export const FormButton = ({
   disabled,
   onClick,
   className = '',
+  isLoading = false,
 }: FormButtonProps) => {
   return (
     <button
       type={type}
       className={clsx(css.button, className)}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onClick={onClick}
     >
       {label}
+      {isLoading ? <Loader /> : ''}
     </button>
   );
 };

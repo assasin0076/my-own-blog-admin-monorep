@@ -15,6 +15,7 @@ import { StuffForm } from '@frontend/components/StuffForm';
 import _ from 'lodash';
 import { convertStuffToFormValues } from './converters';
 import { withPageWrapper } from '@frontend/components/WithPageWrapper';
+import { canBlockStuff } from '@my-own-blog-admin-pannel/backend/lib/can';
 
 export const StuffPage = withPageWrapper({
   authorizedOnly: true,
@@ -25,11 +26,11 @@ export const StuffPage = withPageWrapper({
       label: stuffName,
     });
   },
-  setProps: ({ queryResult, checkExists }) => {
+  setProps: ({ queryResult, checkExists, getAuthorizedMe }) => {
     const stuff = checkExists(queryResult.data.foundStuff, 'Не найден');
-    return { stuff };
+    return { stuff, me: getAuthorizedMe() };
   },
-})(({ stuff }) => {
+})(({ stuff, me }) => {
   const { stuffName } = useParams() as StuffRouteParams;
 
   const utils = trpc.useUtils();
@@ -37,6 +38,7 @@ export const StuffPage = withPageWrapper({
   const navigate = useNavigate();
 
   const updateStuff = trpc.updateStuff.useMutation();
+  const blockStuff = trpc.blockStuff.useMutation();
 
   const [isEdit, setEdit] = useState(false);
 
@@ -53,6 +55,11 @@ export const StuffPage = withPageWrapper({
 
     utils.getStuff.invalidate({ label: stuffName });
     return true;
+  };
+
+  const toggleBlock = async () => {
+    await blockStuff.mutate({ stuffId: stuff.id });
+    utils.invalidate();
   };
 
   return (
@@ -78,6 +85,7 @@ export const StuffPage = withPageWrapper({
           <h1>stuff page</h1>
 
           <h2>{stuff?.label}</h2>
+          {stuff.blockedAt ? <h2>ПРОЕКТ ЗАБЛОКИРОВАН</h2> : ''}
 
           <div className={styles.info}>
             <p>created at: </p>
@@ -96,10 +104,21 @@ export const StuffPage = withPageWrapper({
 
             <p>{stuff?.author?.nick}</p>
           </div>
+          {canBlockStuff(me) ? (
+            <FormButton
+              className={styles['edit-button']}
+              onClick={toggleBlock}
+              label={stuff.blockedAt ? 'Разблокировать' : 'Заблокировать'}
+              isLoading={blockStuff.isPending}
+            />
+          ) : (
+            ''
+          )}
 
           <FormButton
             className={styles['edit-button']}
             onClick={() => setEdit(true)}
+            disabled={!!stuff.blockedAt}
             label="Редактировать"
           />
         </div>

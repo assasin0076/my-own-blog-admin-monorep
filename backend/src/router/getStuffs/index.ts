@@ -26,20 +26,23 @@ export const getStuffsTrpcRoute = trpcBackend.procedure
       ],
       cursor: input.cursor ? { serialNumber: input.cursor } : undefined,
       take: input.limit + 1,
-      where: !input.search
-        ? undefined
-        : {
-            OR: [
-              {
-                label: {
-                  search: normalizedSearch,
+      where: {
+        blockedAt: null,
+        ...(!normalizedSearch
+          ? {}
+          : {
+              OR: [
+                {
+                  label: {
+                    search: normalizedSearch,
+                  },
+                  description: {
+                    search: normalizedSearch,
+                  },
                 },
-                description: {
-                  search: normalizedSearch,
-                },
-              },
-            ],
-          },
+              ],
+            }),
+      },
     });
     const nextStuff = stuff[input.limit];
     const nextCursor = nextStuff?.serialNumber;

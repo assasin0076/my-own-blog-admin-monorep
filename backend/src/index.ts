@@ -6,11 +6,13 @@ import { createPrismaContext } from './lib/prisma';
 import type { PrismaContext } from './lib/prisma';
 import cookieParser from 'cookie-parser';
 import { handledEnv } from './lib/handledEnv';
+import { presetDb } from './scripts/presetDb';
 
 void (async () => {
   let prismaContext: PrismaContext | null = null;
   try {
     prismaContext = createPrismaContext();
+    await presetDb(prismaContext);
     const expressApp = express();
     expressApp.use(
       cors({

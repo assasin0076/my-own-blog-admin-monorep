@@ -8,23 +8,30 @@ datasource db {
 }
 
 model Stuff {
-  id           String   @id @default(uuid())
-  serialNumber Int      @unique @default(autoincrement())
-  label        String   @unique
+  id           String    @id @default(uuid())
+  serialNumber Int       @unique @default(autoincrement())
+  label        String    @unique
   description  String
   tags         String
   repoLink     String
   viewLink     String?
-  createdAt    DateTime @default(now())
+  createdAt    DateTime  @default(now())
   authorId     String
-  author       User     @relation(fields: [authorId], references: [id])
+  author       User      @relation(fields: [authorId], references: [id])
+  blockedAt    DateTime?
 }
 
 model User {
-  id           String   @id @default(uuid())
-  serialNumber Int      @unique @default(autoincrement())
-  nick         String   @unique
+  id           String            @id @default(uuid())
+  serialNumber Int               @unique @default(autoincrement())
+  nick         String            @unique
   password     String
-  createdAt    DateTime @default(now())
+  createdAt    DateTime          @default(now())
   stuffs       Stuff[]
+  permissions  UserPermissions[]
+}
+
+enum UserPermissions {
+  BLOCK_STUFF
+  ALL
 }

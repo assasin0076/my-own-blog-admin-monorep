@@ -21,6 +21,7 @@ export const getStuffTrpcRoute = trpcBackend.procedure
         repoLink: true,
         viewLink: true,
         author: true,
+        blockedAt: true,
       },
     });
 
