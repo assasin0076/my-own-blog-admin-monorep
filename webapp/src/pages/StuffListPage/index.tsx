@@ -94,15 +94,18 @@ export const StuffListPage = () => {
   };
 
   return (
-    <div className={styles.page}>
-      <div>
-        <h1>stuff list page</h1>
-        <p>Список проектов</p>
+    <>
+      <title>Проекты</title>
+      <div className={styles.page}>
+        <div>
+          <h1>stuff list page</h1>
+          <p>Список проектов</p>
+        </div>
+        <div>
+          <FormInput name="search" label="Поиск" formik={formik} />
+        </div>
+        {statesMap[defineMapState()]()}
       </div>
-      <div>
-        <FormInput name="search" label="Поиск" formik={formik} />
-      </div>
-      {statesMap[defineMapState()]()}
-    </div>
+    </>
   );
 };

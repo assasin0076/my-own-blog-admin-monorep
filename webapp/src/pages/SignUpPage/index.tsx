@@ -31,13 +31,16 @@ export const SignUpPage = () => {
     });
 
   return (
-    <div className={css.page}>
-      <h1 className={css.header}>Регистрация</h1>
-      <FormGenerator
-        formSchema={formSchema}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-      />
-    </div>
+    <>
+      <title>Регистрация</title>
+      <div className={css.page}>
+        <h1 className={css.header}>Регистрация</h1>
+        <FormGenerator
+          formSchema={formSchema}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+        />
+      </div>
+    </>
   );
 };

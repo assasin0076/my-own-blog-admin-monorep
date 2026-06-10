@@ -6,9 +6,12 @@ export const NewStuffPage = () => {
   const createStuff = trpc.createStuff.useMutation();
 
   return (
-    <div className={css.page}>
-      <h1 className={css.header}>Добавление проекта</h1>
-      <StuffForm mode="create" onSubmit={createStuff.mutateAsync} />
-    </div>
+    <>
+      <title>Создание проекта</title>
+      <div className={css.page}>
+        <h1 className={css.header}>Добавление проекта</h1>
+        <StuffForm mode="create" onSubmit={createStuff.mutateAsync} />
+      </div>
+    </>
   );
 };

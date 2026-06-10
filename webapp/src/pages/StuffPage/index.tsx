@@ -63,66 +63,69 @@ export const StuffPage = withPageWrapper({
   };
 
   return (
-    <div className={styles.page}>
-      {isEdit ? (
-        <div>
-          <h1 className={styles.header}>Редактирование проекта</h1>
+    <>
+      <title>{stuff.label || 'Проект'}</title>
+      <div className={styles.page}>
+        {isEdit ? (
+          <div>
+            <h1 className={styles.header}>Редактирование проекта</h1>
 
-          <StuffForm
-            mode="edit"
-            onSubmit={updateStuffHandler}
-            initialValues={convertStuffToFormValues(stuff)}
-          />
+            <StuffForm
+              mode="edit"
+              onSubmit={updateStuffHandler}
+              initialValues={convertStuffToFormValues(stuff)}
+            />
 
-          <FormButton
-            className={styles['edit-button']}
-            onClick={() => setEdit(false)}
-            label="Отмена"
-          />
-        </div>
-      ) : (
-        <div>
-          <h1>stuff page</h1>
-
-          <h2>{stuff?.label}</h2>
-          {stuff.blockedAt ? <h2>ПРОЕКТ ЗАБЛОКИРОВАН</h2> : ''}
-
-          <div className={styles.info}>
-            <p>created at: </p>
-
-            <p>{stuff?.createdAt ? format(stuff?.createdAt, 'MM/dd/yyyy') : 'нет даты'}</p>
-
-            <p>tags: </p>
-
-            <p>{stuff?.tags}</p>
-
-            <p>description: </p>
-
-            <p>{stuff?.description}</p>
-
-            <p>author: </p>
-
-            <p>{stuff?.author?.nick}</p>
-          </div>
-          {canBlockStuff(me) ? (
             <FormButton
               className={styles['edit-button']}
-              onClick={toggleBlock}
-              label={stuff.blockedAt ? 'Разблокировать' : 'Заблокировать'}
-              isLoading={blockStuff.isPending}
+              onClick={() => setEdit(false)}
+              label="Отмена"
             />
-          ) : (
-            ''
-          )}
+          </div>
+        ) : (
+          <div>
+            <h1>stuff page</h1>
 
-          <FormButton
-            className={styles['edit-button']}
-            onClick={() => setEdit(true)}
-            disabled={!!stuff.blockedAt}
-            label="Редактировать"
-          />
-        </div>
-      )}
-    </div>
+            <h2>{stuff?.label}</h2>
+            {stuff.blockedAt ? <h2>ПРОЕКТ ЗАБЛОКИРОВАН</h2> : ''}
+
+            <div className={styles.info}>
+              <p>created at: </p>
+
+              <p>{stuff?.createdAt ? format(stuff?.createdAt, 'MM/dd/yyyy') : 'нет даты'}</p>
+
+              <p>tags: </p>
+
+              <p>{stuff?.tags}</p>
+
+              <p>description: </p>
+
+              <p>{stuff?.description}</p>
+
+              <p>author: </p>
+
+              <p>{stuff?.author?.nick}</p>
+            </div>
+            {canBlockStuff(me) ? (
+              <FormButton
+                className={styles['edit-button']}
+                onClick={toggleBlock}
+                label={stuff.blockedAt ? 'Разблокировать' : 'Заблокировать'}
+                isLoading={blockStuff.isPending}
+              />
+            ) : (
+              ''
+            )}
+
+            <FormButton
+              className={styles['edit-button']}
+              onClick={() => setEdit(true)}
+              disabled={!!stuff.blockedAt}
+              label="Редактировать"
+            />
+          </div>
+        )}
+      </div>
+    </>
   );
 });

@@ -6,4 +6,9 @@ export const NotFoundPage = ({
 }: {
   title?: string;
   message?: string;
-}) => <ErrorComponent title={title} message={message} />;
+}) => (
+  <>
+    <title>404</title>
+    <ErrorComponent title={title} message={message} />
+  </>
+);

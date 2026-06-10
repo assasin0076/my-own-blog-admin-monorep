@@ -24,9 +24,16 @@ export const SignInPage = () => {
   };
 
   return (
-    <div className={css.page}>
-      <h1 className={css.header}>Авторизация</h1>
-      <FormGenerator formSchema={formSchema} validationSchema={zSignInInput} onSubmit={onSubmit} />
-    </div>
+    <>
+      <title>Авторизация</title>
+      <div className={css.page}>
+        <h1 className={css.header}>Авторизация</h1>
+        <FormGenerator
+          formSchema={formSchema}
+          validationSchema={zSignInInput}
+          onSubmit={onSubmit}
+        />
+      </div>
+    </>
   );
 };

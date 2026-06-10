@@ -168,9 +168,12 @@ export const ProfilePage = withPageWrapper({
   };
 
   return (
-    <div className={css.page}>
-      <h2>Профиль</h2>
-      {formViews[mode]}
-    </div>
+    <>
+      <title>Профиль</title>
+      <div className={css.page}>
+        <h2>Профиль</h2>
+        {formViews[mode]}
+      </div>
+    </>
   );
 });
